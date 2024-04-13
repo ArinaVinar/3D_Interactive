@@ -7,7 +7,7 @@ using Assets.Scripts.Interfaces;
 
 namespace Assets.Scripts.Entities.Add_Info
 {
-    internal class MovingPoint : Point
+    public class MovingPoint : Point
     {
         int buildingId { get; set; }
         int maxFloor { get; set; }

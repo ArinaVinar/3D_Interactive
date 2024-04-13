@@ -7,7 +7,7 @@ using Assets.Scripts.Interfaces;
 
 namespace Assets.Scripts.Entities.Add_Info
 {
-    internal class ChowPoint : Point
+    public class ChowPoint : Point
     {
         string Info { get; set; }
         int buildingId { get; set; }

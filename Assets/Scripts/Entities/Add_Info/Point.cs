@@ -7,10 +7,10 @@ using Assets.Scripts.Interfaces;
 
 namespace Assets.Scripts.Entities.Add_Info
 {
-    internal class Point : IPoint
+    public class Point : IPoint
     {
-        Coordinate IPoint.Coordinate { get; set; }
-        bool IPoint.Active { get; set; }
-        string IPoint.Type { get; set; }
+        public Coordinate Coordinate { get; set; }
+        public bool Active { get; set; }
+        public string Type { get; set; }
     }
 }

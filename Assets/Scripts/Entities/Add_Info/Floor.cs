@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Entities.Add_Info
 {
-    internal class Floor
+    public class Floor
     {
-        string Info { get; set; }
-        bool Status { get; set; }
-        Graph Graph { get; set; }
+        public int Number { get; set; }
+        public string Info { get; set; }
+        public bool Status { get; set; }
+        public Graph Graph { get; set; }
     }
 }

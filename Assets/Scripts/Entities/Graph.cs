@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using System.Text;
 
 public class Graph
 {
@@ -41,17 +42,18 @@ public class Graph
         }
     }
 
-    public void PrintGraph()
+    public override string ToString()
     {
+        var res = new StringBuilder();
         for (int i = 0; i < points.Count; i++)
         {
             for (int j = 0; j < points.Count; j++)
             {
-                Console.Write(string.Format("{0:f1}", Matrix[i, j] + "\t"));
+                res.Append(string.Format("{0:f1}", Matrix[i, j] + "\t"));
             }
-            Console.WriteLine();
+            res.AppendLine();
         }
-        Console.ReadLine();
+        return res.ToString();
     }
 
     public double Dijkstra(Coordinate start, Coordinate end)

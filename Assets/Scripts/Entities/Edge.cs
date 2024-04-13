@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using Assets.Scripts.Entities.Add_Info;
 
 public class Edge
 {
     public Coordinate First;
     public Coordinate Second;
+
 
     public Edge(Coordinate first, Coordinate second)
     {

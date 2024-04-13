@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Entities.Add_Info
 {
-    internal class Building
+    public class Building
     {
         int MaxFloor { get; set; }
         string Info { get; set; }

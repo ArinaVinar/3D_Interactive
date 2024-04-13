@@ -7,7 +7,7 @@ using Assets.Scripts.Interfaces;
 
 namespace Assets.Scripts.Entities.Add_Info
 {
-    internal class Auditorium : Point
+    public class Auditorium : Point
     {
         int buildingId { get; set; }
         string Info { get; set; }
