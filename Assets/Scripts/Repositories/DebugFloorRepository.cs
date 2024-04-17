@@ -35,7 +35,7 @@ namespace Assets.Scripts.Repositories
             {
                 int indA = r.Next(0, size - 1);
                 int indB = r.Next(0, size - 1);
-                while(indA == indB || indA+1 == indB) //нужно чтобы убрать залупу и не повторять пути
+                while(indA == indB || indA+1 == indB) //нужно чтобы убрать петли и не повторять пути
                     indB = r.Next(0, size - 1);
 
                 edges.Add(new Edge(points[r.Next(0, size - 1)].Coordinate, points[i + 1].Coordinate));
