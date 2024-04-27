@@ -17,6 +17,7 @@ public class Graph
         this.points = points;
         this.edges = edges;
         Matrix = new double[points.Count, points.Count];
+        this.CreateGraph();
     }
 
     public void CreateGraph()
@@ -54,6 +55,18 @@ public class Graph
             res.AppendLine();
         }
         return res.ToString();
+    }
+    public void PrintGraph()
+    {
+        for (int i = 0; i < points.Count; i++)
+        {
+            for (int j = 0; j < points.Count; j++)
+            {
+                Console.Write(string.Format("{0:f1}", Matrix[i, j] + "\t"));
+            }
+            Console.WriteLine();
+        }
+        Console.ReadLine();
     }
 
     public double Dijkstra(Coordinate start, Coordinate end)

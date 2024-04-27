@@ -13,10 +13,11 @@ namespace Assets.Scripts.Repositories
         private List<Floor> floors = new List<Floor>();
         private Random r = new Random();
 
+        //size - кол-во точек в графе
         public DebugFloorRepository(int size = 5)
         {
             List<Point> points = new List<Point>();
-            HashSet<Edge> edges = new HashSet<Edge>();
+            List<Edge> edges = new List<Edge>();
 
             for (int i = 0; i < size; i++)
                 points.Add(new Point()
@@ -35,13 +36,23 @@ namespace Assets.Scripts.Repositories
             {
                 int indA = r.Next(0, size - 1);
                 int indB = r.Next(0, size - 1);
-                while(indA == indB || indA+1 == indB) //нужно чтобы убрать петли и не повторять пути
-                    indB = r.Next(0, size - 1);
-
-                edges.Add(new Edge(points[r.Next(0, size - 1)].Coordinate, points[i + 1].Coordinate));
+                if (indA == indB || indA + 1 == indB) //нужно чтобы убрать петли и не повторять пути
+                {
+                    //indB = r.Next(0, size - 1);
+                    continue;
+                }
+                else
+                {
+                    edges.Add(new Edge(points[indA].Coordinate, points[indB].Coordinate));
+                }
             }
-
-            Graph graph = new Graph(points.Select(p => p.Coordinate).ToList(), edges.ToList());
+            List<Coordinate> point_coordinate = new List<Coordinate>();
+            for (int i = 0; i < points.Count; i++)
+            {
+                point_coordinate.Add(points[i].Coordinate);
+            }
+            Graph graph = new Graph(point_coordinate, edges);
+            //Graph graph = new Graph(points.Select(p => p.Coordinate).ToList(), edges.ToList());
 
             floors.Add(new Floor()
             {
