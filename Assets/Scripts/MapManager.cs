@@ -15,32 +15,37 @@ public class MapManager : MonoBehaviour
     [SerializeField]
     private Dictionary<Coordinate, PointGameObject> points = new();
     private List<Coordinate> activePath = new();
+    private UIManager uiManager;
 
+    public static MapManager Instance { get; private set; }
     public LineRenderer lineRenderer;
     public GameObject point_prefabs;
 
     public MapManager()
     {
+        if(Instance == null)
+            Instance = this;
         _floorRepository = new DebugFloorRepository();
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        uiManager = UIManager.Instance;
         floor = _floorRepository.Get(16);
-        
-        // UIManager.Init();
+
+        uiManager.SetValues(floor.Graph.points);
 
         SetPoints();
         var from = points.ToList()[0].Value.PointData;
         var to = points.ToList()[^1].Value.PointData;
 
-        CreatePath(from, to);
+        //CreatePath(from, to);
     }
 
-    public void CreatePath(Point from, Point to)
+    public void CreatePath(Coordinate from, Coordinate to)
     {
-        activePath = floor.Graph.ShortestWay(from.Coordinate, to.Coordinate);
+        activePath = floor.Graph.ShortestWay(from, to);
         DrawPath();
     }
 
