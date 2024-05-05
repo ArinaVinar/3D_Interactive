@@ -9,7 +9,6 @@ public class Graph
 {
     public List<Coordinate> points = new List<Coordinate>();
     public List<Edge> edges = new List<Edge>();
-
     public double[,] Matrix;
 
     public Graph(List<Coordinate> points, List<Edge> edges)
@@ -69,115 +68,56 @@ public class Graph
         Console.ReadLine();
     }
 
-    public double Dijkstra(Coordinate start, Coordinate end)
+    public List<Coordinate> FindPath(Coordinate start, Coordinate end)
     {
-        Dictionary<Coordinate, double> distances = new Dictionary<Coordinate, double>();
-        HashSet<Coordinate> visited = new HashSet<Coordinate>();
+        int start_index = points.IndexOf(start);
+        int end_index = points.IndexOf(end);
+        bool[] visited = new bool[points.Count];
+        Queue<int> queue = new Queue<int>();
 
-        foreach (var point in points)
+        visited[start_index] = true;
+        queue.Enqueue(start_index);
+
+        while (queue.Count > 0)
         {
-            distances[point] = double.PositiveInfinity;
-        }
+            int current_node = queue.Dequeue();
 
-        distances[start] = 0;
-
-        while (visited.Count < points.Count)
-        {
-            Coordinate current = null;
-            double minDistance = double.PositiveInfinity;
-
-            foreach (var point in points)
+            if (current_node == end_index)
             {
-                if (!visited.Contains(point) && distances[point] < minDistance)
+                // Reconstruct path by backtracking 
+                List<Coordinate> path = new List<Coordinate>();
+                int prev = current_node;
+                while (prev != -1)
                 {
-                    current = point;
-                    minDistance = distances[point];
+                    path.Insert(0, points[prev]);
+                    prev = FindParrent(visited, prev);
                 }
+                return path;
             }
 
-            if (current == null)
+            for (int neighbor = 0; neighbor < points.Count; neighbor++)
             {
-                break;
-            }
-
-            visited.Add(current);
-
-            foreach (var edge in edges)
-            {
-                if (edge.First == current)
+                if (Matrix[current_node, neighbor] < double.MaxValue && !visited[neighbor]) // Check for valid connection and unvisited node 
                 {
-                    double distanceThroughCurrent = distances[current] + edge.Length;
-                    if (distanceThroughCurrent < distances[edge.Second])
-                    {
-                        distances[edge.Second] = distanceThroughCurrent;
-                    }
+                    visited[neighbor] = true;
+                    queue.Enqueue(neighbor);
                 }
             }
         }
 
-        return distances[end];
+        return new List<Coordinate>(); // No path found 
     }
 
-    public List<Coordinate> ShortestWay(Coordinate start, Coordinate end)
+    private int FindParrent(bool[] visited, int node)
     {
-        Dictionary<Coordinate, double> distances = new Dictionary<Coordinate, double>();
-        // Словарь для хранения предшествующих точек на кратчайшем пути
-        Dictionary<Coordinate, Coordinate> previous = new Dictionary<Coordinate, Coordinate>();
-        HashSet<Coordinate> visited = new HashSet<Coordinate>();
-
-        foreach (var point in points)
+        for (int i = 0; i < points.Count; i++)
         {
-            distances[point] = double.PositiveInfinity;
-        }
-
-        distances[start] = 0;
-
-        while (visited.Count < points.Count)
-        {
-            Coordinate current = null;
-            double minDistance = double.PositiveInfinity;
-
-            foreach (var point in points)
+            if (visited[i] && Matrix[i, node] < double.MaxValue) // Check for visited parent with a connection 
             {
-                if (!visited.Contains(point) && distances[point] < minDistance)
-                {
-                    current = point;
-                    minDistance = distances[point];
-                }
-            }
-
-            if (current == null)
-            {
-                break;
-            }
-
-            visited.Add(current);
-
-            foreach (var edge in edges)
-            {
-                if (edge.First == current)
-                {
-                    double distanceThroughCurrent = distances[current] + edge.Length;
-                    if (distanceThroughCurrent < distances[edge.Second])
-                    {
-                        distances[edge.Second] = distanceThroughCurrent;
-                        previous[edge.Second] = current; // Обновляем предшествующую вершину на кратчайшем пути
-                    }
-                }
+                return i;
             }
         }
-
-        // Формирование списка точек кратчайшего пути
-        List<Coordinate> shortestPath = new List<Coordinate>();
-        Coordinate currentPoint = end;
-
-        while (currentPoint != null)
-        {
-            shortestPath.Insert(0, currentPoint); // Добавляем текущую точку в начало списка (чтобы путь был в порядке от начала к концу)
-            currentPoint = previous.ContainsKey(currentPoint) ? previous[currentPoint] : null; // Переходим к предшествующей точке на кратчайшем пути
-        }
-
-        return shortestPath;
+        return -1; // No parent found (shouldn't happen in BFS) 
     }
 }
 

@@ -40,7 +40,7 @@ public class MapManager : MonoBehaviour
 
     public void CreatePath(Point from, Point to)
     {
-        activePath = floor.Graph.ShortestWay(from.Coordinate, to.Coordinate);
+        activePath = floor.Graph.FindPath(from.Coordinate, to.Coordinate);
         DrawPath();
     }
 
@@ -58,8 +58,8 @@ public class MapManager : MonoBehaviour
                 new Vector3((float)floor.Graph.points[i].X, 0, (float)floor.Graph.points[i].Y),
                 Quaternion.identity);
 
-            Coordinate pointCoordinate = new Coordinate((float)floor.Graph.points[i].X,
-                                                        (float)floor.Graph.points[i].Y);
+            Coordinate pointCoordinate = new Coordinate(floor.Graph.points[i].X,
+                                                        floor.Graph.points[i].Y);
 
             var pointGO = newPoint.AddComponent<PointGameObject>();
             pointGO.PointData = new(pointCoordinate, true, "point");

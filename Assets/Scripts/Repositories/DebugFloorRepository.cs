@@ -14,7 +14,7 @@ namespace Assets.Scripts.Repositories
         private Random r = new Random();
 
         //size - кол-во точек в графе
-        public DebugFloorRepository(int size = 5)
+        public DebugFloorRepository(int size = 15)
         {
             List<Point> points = new List<Point>();
             List<Edge> edges = new List<Edge>();
@@ -22,7 +22,7 @@ namespace Assets.Scripts.Repositories
             for (int i = 0; i < size; i++)
                 points.Add(new Point()
                 {
-                    Coordinate = new(r.Next(-50, 50) / 10f, r.Next(-50, 50) / 10f),
+                    Coordinate = new(r.Next(-100, 100) / 10f, r.Next(-100, 100) / 10f),
                     Active = true,
                     Type = "yes"
                 });
